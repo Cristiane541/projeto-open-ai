@@ -24,12 +24,44 @@ projeto-ia/
 ├── script.js
 └── README.md
 
+---
 
-## 🚀 Como executar
+## 🧠 Requisitos Técnicos
 
-1. Clone este repositório
-2. Abra o arquivo `index.html` no navegador
-3. Insira a chave de API e uma pergunta
+- HTML básico com estrutura clara
+- JavaScript usando `fetch()` e `async/await`
+- Tratamento de erros de rede e campos vazios
+- CSS para visual responsivo e feedback visual
+- Integração com API da OpenAI
+
+---
+
+## 🚀 Como rodar o projeto
+
+1. Clone o repositório:
+git clone https://github.com/SEU-USUARIO/projeto-open-ai.git
+
+2. Acesse a pasta:
+cd /projeto-open-ai.git
+
+4. Mude para a branch de desenvolvimento:
+git checkout dev
+
+Ou crie uma nova branch com seu nome ou tarefa:
+git checkout -b nome-da-feature
+
+5. Faça alterações, depois:
+git add .
+git commit -m "descrição clara do que foi feito"
+git push origin nome-da-feature
+
+6. Abra um Pull Request para a branch dev no GitHub.
+
+obs.:
+Use nomes claros: ajuste-layout, feature-api, bug-resposta
+Commits curtos e objetivos
+Sempre abra Pull Requests para revisão
+
 
 ## 👥 Contribuidores
 
