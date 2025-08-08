@@ -202,3 +202,10 @@ body {
         padding: 15px;
     }
 }
+
+/* Garantir que elementos com atributo hidden fiquem invisíveis */
+[hidden] { 
+  display: none !important; 
+}
+
+
