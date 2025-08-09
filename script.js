@@ -10,8 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         answerArea: document.getElementById('response-area'),
         answerContent: document.getElementById('response-content'),
         error: document.getElementById('error-message'),
-        loadingIcon: document.querySelector('.loading-icon'),
-        // Novos elementos da UI
+        loadingIcon: document.querySelector('.loading-icon'),      
         historySidebar: document.getElementById('history-sidebar'),
         historyList: document.getElementById('history-list'),
         newChatBtn: document.getElementById('new-chat-button'),
@@ -58,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         messageWrapper.appendChild(messageBubble);
         els.answerContent.appendChild(messageWrapper);
         els.answerArea.hidden = false;
+        els.clearBtn.hidden = false; // Mostra o botão Limpar
         messageWrapper.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentConversation.messages.push({ sender: 'user', text: question });
         if (currentConversation.messages.length === 1) {
             currentConversation.title = question.substring(0, 30) + (question.length > 30 ? '...' : '');
-            els.historySidebar.hidden = false; // Mostra a barra na primeira mensagem
+            els.historySidebar.hidden = false; 
         }
         saveConversations();
         renderChatHistory();
@@ -205,7 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 setActiveChat(newActiveId);
                 if (!newActiveId) {
                     clearChatDisplay();
-                    createNewChat(); // Cria um novo chat vazio se todos foram apagados
+                    els.clearBtn.hidden = true; // Esconde o botão Limpar
+                    createNewChat();
                 }
             }
         }
@@ -266,6 +267,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         updateSidebarVisibility();
+        // Garante que o botão Limpar só apareça se houver mensagens
+        els.clearBtn.hidden = !(activeChatId && conversations[activeChatId] && conversations[activeChatId].messages.length > 0);
     }
 
     initialize();
