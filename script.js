@@ -39,7 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderAnswer(text) {
     if (!els.answerArea || !els.answerContent) return;
     els.answerContent.textContent = text || '';
-    els.answerArea.hidden = !text; 
+    els.answerArea.hidden = !text;
+
+    if (text) {
+      els.answerArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 
   function validate() {
