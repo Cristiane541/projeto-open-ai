@@ -36,14 +36,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function clearError() { showError(''); }
 
-  function renderAnswer(text) {
+  // Limpa todo o histórico do chat da tela
+  function clearChat() {
     if (!els.answerArea || !els.answerContent) return;
-    els.answerContent.textContent = text || '';
-    els.answerArea.hidden = !text;
+    els.answerContent.innerHTML = '';
+    els.answerArea.hidden = true;
+  }
+  
+  // Adiciona uma nova mensagem (pergunta ou resposta) ao chat
+  function appendMessage(text, sender) {
+    if (!els.answerContent) return;
 
-    if (text) {
-      els.answerArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const messageWrapper = document.createElement('div');
+    // 'sender' será 'user' ou 'ai'
+    messageWrapper.className = `message-wrapper ${sender}-wrapper`;
+
+    const messageBubble = document.createElement('div');
+    messageBubble.className = `message-bubble message-${sender}`;
+
+    // Usa <pre> para a resposta da IA para preservar quebras de linha
+    if (sender === 'ai') {
+      const pre = document.createElement('pre');
+      pre.textContent = text;
+      messageBubble.appendChild(pre);
+    } else {
+      messageBubble.textContent = text;
     }
+
+    messageWrapper.appendChild(messageBubble);
+    els.answerContent.appendChild(messageWrapper);
+
+    // Garante que a área de chat esteja visível e rola para a nova mensagem
+    els.answerArea.hidden = false;
+    messageWrapper.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
 
   function validate() {
@@ -57,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function handleAsk() {
     clearError();
-    renderAnswer('');
 
     const error = validate();
     if (error) {
@@ -67,9 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setLoading(true);
 
-    const apiKey = els.apiKey.value.trim();
     const question = els.question.value.trim();
+    const apiKey = els.apiKey.value.trim();
     const model = els.modelSelect.value;
+    
+    // Adiciona a mensagem do usuário ao chat imediatamente
+    appendMessage(question, 'user');
+    
+    // Limpa o campo de input e atualiza o contador
+    els.question.value = '';
+    els.charCounter.textContent = `0 / ${els.question.maxLength}`;
 
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
@@ -98,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const answer = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
       if (answer) {
-        renderAnswer(answer);
+        appendMessage(answer, 'ai');
       } else {
         throw new Error('A API não retornou uma resposta no formato esperado.');
       }
@@ -106,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error('Erro na chamada da API:', err);
       showError(`Ocorreu um erro: ${err.message}`);
+      // Adiciona uma mensagem de erro também no chat para feedback visual
+      appendMessage(`Desculpe, ocorreu um erro: ${err.message}`, 'ai');
     } finally {
       setLoading(false);
     }
@@ -127,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // limpa a pergunta e a resposta
   els.clearBtn.addEventListener('click', () => {
     els.question.value = '';
-    renderAnswer('');
+    clearChat();
     clearError();
     els.question.focus();
   });
@@ -175,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Estado inicial
   setLoading(false);
   clearError();
-  renderAnswer('');
+  clearChat();
 });
 
 

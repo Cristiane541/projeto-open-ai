@@ -242,6 +242,89 @@ body {
     animation: fadeIn 0.3s ease-in;
 }
 
+/* Estilos para o formato de Chat */
+.message-wrapper {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .user-wrapper {
+    justify-content: flex-end; /* Alinha o balão do usuário à direita */
+  }
+  
+  .ai-wrapper {
+    justify-content: flex-start; /* Alinha o balão da IA à esquerda */
+  }
+  
+  .message-bubble {
+    max-width: 80%;
+    padding: 12px 18px;
+    border-radius: 20px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  
+  .message-user {
+    background-color: #007bff; /* Cor azul para o usuário */
+    color: white;
+    border-bottom-right-radius: 5px; /* Detalhe visual de balão */
+  }
+  
+  .message-ai {
+    background-color: #e9ecef; /* Cor cinza claro para a IA */
+    color: #333;
+    border-bottom-left-radius: 5px; /* Detalhe visual de balão */
+  }
+  
+  /* Garante que a formatação da resposta da IA seja preservada */
+  .message-ai pre {
+    margin: 0;
+    font-family: inherit; /* Usa a mesma fonte do resto da página */
+    font-size: inherit;
+    white-space: pre-wrap; /* Quebra de linha automática */
+    color: inherit;
+  }/* Estilos para o formato de Chat */
+.message-wrapper {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .user-wrapper {
+    justify-content: flex-end; /* Alinha o balão do usuário à direita */
+  }
+  
+  .ai-wrapper {
+    justify-content: flex-start; /* Alinha o balão da IA à esquerda */
+  }
+  
+  .message-bubble {
+    max-width: 80%;
+    padding: 12px 18px;
+    border-radius: 20px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  
+  .message-user {
+    background-color: #007bff; /* Cor azul para o usuário */
+    color: white;
+    border-bottom-right-radius: 5px; /* Detalhe visual de balão */
+  }
+  
+  .message-ai {
+    background-color: #e9ecef; /* Cor cinza claro para a IA */
+    color: #333;
+    border-bottom-left-radius: 5px; /* Detalhe visual de balão */
+  }
+  
+  /* Garante que a formatação da resposta da IA seja preservada */
+  .message-ai pre {
+    margin: 0;
+    font-family: inherit; /* Usa a mesma fonte do resto da página */
+    font-size: inherit;
+    white-space: pre-wrap; /* Quebra de linha automática */
+    color: inherit;
+  }
 /* Animações */
 @keyframes fadeIn {
     from { opacity: 0; }
