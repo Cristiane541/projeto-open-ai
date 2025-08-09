@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function validate() {
         const q = (els.question.value || '').trim();
         const k = (els.apiKey.value || '').trim();
+        if (!k && !q) return 'Preencha a API Key e a pergunta.';
         if (!k) return 'Preencha a API Key.';
         if (!q) return 'Preencha a pergunta.';
         return '';

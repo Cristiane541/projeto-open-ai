@@ -52,11 +52,11 @@
                     </div>
                     <div class="response-content" id="response-content"></div>
                 </div>
-                <div class="error-message" id="error-message" hidden></div>
                 <div class="input-area">
                     <textarea id="user-question" placeholder="Digite sua pergunta aqui..." rows="3"
                         maxlength="2000"></textarea>
                     <div id="char-counter" class="char-counter">0 / 2000</div>
+                    <div class="error-message" id="error-message" hidden></div>
                     <div class="button-group">
                         <button id="ask-button" class="ask-button">
                             <span class="button-text">Enviar</span>
@@ -66,6 +66,17 @@
                             <span class="button-text">Limpar</span>
                         </button>
                     </div>
+                </div>
+                <div class="error-message" id="error-message" hidden></div>
+                <div class="response-area" id="response-area" hidden>
+                    <div class="response-header">
+                        <h3><i class="fas fa-robot"></i> CHAT:</h3>
+                        <button id="copy-button" class="copy-button" title="Copiar resposta">
+                            <i class="fas fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                    <div class="response-content" id="response-content"></div>
                 </div>
             </main>
         </div>

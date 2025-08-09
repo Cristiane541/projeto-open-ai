@@ -235,8 +235,8 @@ body {
 .error-message {
     background-color: #fce8e6;
     color: #d93025;
-    padding: 10px 15px; 
-    margin: 20px 20px 15px 20px; 
+    padding: 10px 15px;
+    margin: 0 0 10px 0; /* Ajustado para a posição final dentro do input-area */
     border-radius: 8px;
     border-left: 4px solid #d93025;
     animation: fadeIn 0.3s ease-in;
