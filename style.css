@@ -100,6 +100,13 @@ body {
     gap: 10px;
 }
 
+.button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-self: flex-end;
+}
+
 .input-area textarea {
     flex: 1;
     padding: 12px 15px;
@@ -110,7 +117,7 @@ body {
     min-height: 100px;
 }
 
-.ask-button {
+.ask-button, .clear-button{
     background-color: #4285f4;
     color: white;
     border: none;
@@ -124,13 +131,15 @@ body {
     justify-content: center;
     transition: background-color 0.3s;
     align-self: flex-end;
+    min-width: 120px;
+    margin-bottom: 10px;
 }
 
-.ask-button:hover {
+.ask-button:hover, .clear-button:hover{
     background-color: #3367d6;
 }
 
-.ask-button:disabled {
+.ask-button:disabled, .clear-button:disabled {
     background-color: #bdc1c6;
     cursor: not-allowed;
 }
@@ -140,11 +149,11 @@ body {
     margin-left: 8px;
 }
 
-.ask-button.loading .button-text {
+.ask-button.loading .button-text, .clear-button.loading .button-text {
     display: none;
 }
 
-.ask-button.loading .loading-icon {
+.ask-button.loading .loading-icon, .clear-button.loading .loading-icon {
     display: inline-block;
 }
 

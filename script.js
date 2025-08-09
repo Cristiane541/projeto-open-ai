@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     answerArea: document.getElementById('response-area'),
     answerContent: document.getElementById('response-content'),
     error: document.getElementById('error-message'),
-    loadingIcon: document.querySelector('.loading-icon')
+    loadingIcon: document.querySelector('.loading-icon'),
+    clearBtn: document.getElementById('clear-button')
   };
 
   // Falha rápida se algo essencial não existir
@@ -78,8 +79,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // limpa a pergunta e a resposta
+  els.clearBtn.addEventListener('click', () => {
+    els.question.value = '';
+    renderAnswer('');
+    clearError();
+    els.question.focus();
+  });
+
   // Estado inicial
   setLoading(false);
   clearError();
   renderAnswer('');
 });
+
+
