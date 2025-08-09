@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const els = {
     apiKey: document.getElementById('api-key'),
+    modelSelect: document.getElementById('model-select'),
     question: document.getElementById('user-question'),
     askBtn: document.getElementById('ask-button'),
     answerArea: document.getElementById('response-area'),
@@ -11,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Falha rápida se algo essencial não existir
-  if (!els.apiKey || !els.question || !els.askBtn || !els.error) {
-    alert('IDs não encontrados no HTML. Verifique api-key, user-question, ask-button e error-message.');
+  if (!els.apiKey || !els.modelSelect || !els.question || !els.askBtn || !els.error) {
+    alert('IDs não encontrados no HTML. Verifique todos os IDs necessários.');
     return;
   }
 
@@ -53,14 +54,52 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAnswer('');
 
     const error = validate();
-    if (error) { showError(error); return; }
+    if (error) {
+      showError(error);
+      return;
+    }
 
     setLoading(true);
+
+    const apiKey = els.apiKey.value.trim();
+    const question = els.question.value.trim();
+    const model = els.modelSelect.value;
+
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
     try {
-      await new Promise(r => setTimeout(r, 800)); // simulação
-      renderAnswer(`(Simulado) Resposta para: ${els.question.value.trim()}`);
-    } catch {
-      showError('Ocorreu um erro ao processar sua solicitação.');
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: question
+            }]
+          }]
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        const message = errorData?.error?.message || `Erro HTTP: ${response.status}`;
+        throw new Error(message);
+      }
+
+      const data = await response.json();
+      const answer = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (answer) {
+        renderAnswer(answer);
+      } else {
+        throw new Error('A API não retornou uma resposta no formato esperado.');
+      }
+
+    } catch (err) {
+      console.error('Erro na chamada da API:', err);
+      showError(`Ocorreu um erro: ${err.message}`);
     } finally {
       setLoading(false);
     }
