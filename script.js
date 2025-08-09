@@ -61,8 +61,17 @@ document.addEventListener('DOMContentLoaded', () => {
         messageWrapper.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
+    function updateSidebarVisibility() {
+        const hasSavedConversations = Object.values(conversations).some(conv => conv.messages.length > 0);
+        els.historySidebar.hidden = !hasSavedConversations;
+
+        // Adiciona ou remove a classe para controlar a largura do container
+        document.querySelector('.app-container').classList.toggle('with-sidebar', hasSavedConversations);
+    }
+
     function saveConversations() {
         localStorage.setItem('gemini-conversations', JSON.stringify(conversations));
+        updateSidebarVisibility();
     }
 
     function setActiveChat(chatId) {
@@ -85,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
         els.historyList.innerHTML = '';
         Object.keys(conversations).forEach(chatId => {
             const conversation = conversations[chatId];
+            if (conversation.messages.length === 0) return; // Não mostra chats vazios
+
             const listItem = document.createElement('li');
             listItem.className = 'history-item';
             listItem.textContent = conversation.title;
@@ -135,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentConversation.messages.push({ sender: 'user', text: question });
         if (currentConversation.messages.length === 1) {
             currentConversation.title = question.substring(0, 30) + (question.length > 30 ? '...' : '');
+            els.historySidebar.hidden = false; // Mostra a barra na primeira mensagem
         }
         saveConversations();
         renderChatHistory();
@@ -192,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setActiveChat(newActiveId);
                 if (!newActiveId) {
                     clearChatDisplay();
+                    createNewChat(); // Cria um novo chat vazio se todos foram apagados
                 }
             }
         }
@@ -251,6 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setActiveChat(activeChatId);
             }
         }
+        updateSidebarVisibility();
     }
 
     initialize();

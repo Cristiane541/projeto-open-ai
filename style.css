@@ -235,8 +235,8 @@ body {
 .error-message {
     background-color: #fce8e6;
     color: #d93025;
-    padding: 15px;
-    margin: 0 25px 25px;
+    padding: 10px 15px; 
+    margin: 20px 20px 15px 20px; 
     border-radius: 8px;
     border-left: 4px solid #d93025;
     animation: fadeIn 0.3s ease-in;
@@ -249,11 +249,11 @@ body {
   }
   
   .user-wrapper {
-    justify-content: flex-end; /* Alinha o balão do usuário à direita */
+    justify-content: flex-end; 
   }
   
   .ai-wrapper {
-    justify-content: flex-start; /* Alinha o balão da IA à esquerda */
+    justify-content: flex-start; 
   }
   
   .message-bubble {
@@ -265,36 +265,37 @@ body {
   }
   
   .message-user {
-    background-color: #007bff; /* Cor azul para o usuário */
+    background-color: #007bff; 
     color: white;
-    border-bottom-right-radius: 5px; /* Detalhe visual de balão */
+    border-bottom-right-radius: 5px; 
   }
   
   .message-ai {
-    background-color: #e9ecef; /* Cor cinza claro para a IA */
+    background-color: #e9ecef; 
     color: #333;
-    border-bottom-left-radius: 5px; /* Detalhe visual de balão */
+    border-bottom-left-radius: 5px; 
   }
   
-  /* Garante que a formatação da resposta da IA seja preservada */
+  
   .message-ai pre {
     margin: 0;
-    font-family: inherit; /* Usa a mesma fonte do resto da página */
+    font-family: inherit; 
     font-size: inherit;
-    white-space: pre-wrap; /* Quebra de linha automática */
+    white-space: pre-wrap; 
     color: inherit;
-  }/* Estilos para o formato de Chat */
+  }
+  
 .message-wrapper {
     display: flex;
     margin-bottom: 15px;
   }
   
   .user-wrapper {
-    justify-content: flex-end; /* Alinha o balão do usuário à direita */
+    justify-content: flex-end; 
   }
   
   .ai-wrapper {
-    justify-content: flex-start; /* Alinha o balão da IA à esquerda */
+    justify-content: flex-start; 
   }
   
   .message-bubble {
@@ -306,23 +307,23 @@ body {
   }
   
   .message-user {
-    background-color: #007bff; /* Cor azul para o usuário */
+    background-color: #007bff;
     color: white;
-    border-bottom-right-radius: 5px; /* Detalhe visual de balão */
+    border-bottom-right-radius: 5px; 
   }
   
   .message-ai {
-    background-color: #e9ecef; /* Cor cinza claro para a IA */
+    background-color: #e9ecef; 
     color: #333;
-    border-bottom-left-radius: 5px; /* Detalhe visual de balão */
+    border-bottom-left-radius: 5px;
   }
   
   /* Garante que a formatação da resposta da IA seja preservada */
   .message-ai pre {
     margin: 0;
-    font-family: inherit; /* Usa a mesma fonte do resto da página */
+    font-family: inherit; 
     font-size: inherit;
-    white-space: pre-wrap; /* Quebra de linha automática */
+    white-space: pre-wrap; 
     color: inherit;
   }
 /* Animações */
@@ -331,17 +332,15 @@ body {
     to { opacity: 1; }
 }
 
-/* Responsividade */
+/* Responsividade original para o cabeçalho em telas pequenas */
 @media (max-width: 600px) {
     .api-settings {
         flex-direction: column;
         align-items: stretch;
     }
-    
     .app-header h1 {
         font-size: 22px;
     }
-    
     .app-main {
         padding: 15px;
     }
@@ -352,20 +351,31 @@ body {
   display: none !important; 
 }
 
-/* Estilos para o layout com a barra de histórico */
+/* --- ESTILOS DO LAYOUT COM HISTÓRICO --- */
+
+/* 1. Container Principal */
 .app-container {
     display: flex;
-    max-width: 1200px; /* Aumenta a largura máxima para acomodar a barra lateral */
-    height: 95vh; /* Ocupa quase toda a altura da tela */
+    margin: 2.5vh auto;
+
 }
 
+.app-container.with-sidebar {
+    max-width: 1200px; 
+    display: flex;
+    height: 95vh;
+    margin: 2.5vh auto;
+    transition: max-width 0.4s ease-in-out;
+}
+
+/* 2. Barra Lateral do Histórico */
 .history-sidebar {
     width: 260px;
     background-color: #f1f3f4;
     border-right: 1px solid #dadce0;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0; /* Impede que a barra lateral encolha */
+    flex-shrink: 0;
 }
 
 .history-header {
@@ -402,7 +412,7 @@ body {
 .history-list {
     list-style: none;
     padding: 10px;
-    overflow-y: auto; /* Adiciona scroll se a lista for longa */
+    overflow-y: auto;
     flex-grow: 1;
 }
 
@@ -415,7 +425,7 @@ body {
     color: #3c4043;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+    text-overflow: ellipsis;
     transition: background-color 0.2s;
 }
 
@@ -428,46 +438,59 @@ body {
     font-weight: 500;
 }
 
+/* 3. Área Principal do Chat */
 .chat-main {
-    flex-grow: 1; /* Ocupa o espaço restante */
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-}
-
-.app-header {
-    flex-shrink: 0;
-}
-
-.app-main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Permite scroll apenas na área principal do chat */
+    background-color: white;
+    overflow: hidden; 
+    border-radius: 0 16px 16px 0;
+}
+
+.chat-main .app-header {
+    border-radius: 0;
+}
+
+.chat-main .app-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden; 
+    padding: 0;
 }
 
 .response-area {
     flex-grow: 1;
+    overflow-y: auto; 
+    padding: 20px;
+    background-color: white;
 }
 
-/* Ajustes de responsividade para o novo layout */
-@media (max-width: 800px) {
-    .history-sidebar {
-        width: 100%;
-        height: auto;
-        position: static;
-        border-right: none;
-        border-bottom: 1px solid #dadce0;
-    }
+.input-area {
+    padding: 20px;
+    border-top: 1px solid #dadce0;
+    background-color: #f8f9fa;
+    flex-shrink: 0; 
+}
 
+
+@media (max-width: 700px) {
     .app-container {
         flex-direction: column;
         height: auto;
     }
 
-    .chat-main {
-        height: 60vh; /* Define uma altura para o chat em telas pequenas */
+    .history-sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #dadce0;
+        border-radius: 16px 16px 0 0;
     }
-}
 
-
+    .chat-main {
+        height: 60vh;
+        border-radius: 0 0 16px 16px;
+    }
+} 
