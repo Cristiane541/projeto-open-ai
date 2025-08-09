@@ -4,11 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     modelSelect: document.getElementById('model-select'),
     question: document.getElementById('user-question'),
     askBtn: document.getElementById('ask-button'),
+    clearBtn: document.getElementById('clear-button'),
+    copyBtn: document.getElementById('copy-button'),
     answerArea: document.getElementById('response-area'),
     answerContent: document.getElementById('response-content'),
     error: document.getElementById('error-message'),
     loadingIcon: document.querySelector('.loading-icon'),
-    clearBtn: document.getElementById('clear-button')
   };
 
   // Falha rápida se algo essencial não existir
@@ -136,6 +137,28 @@ document.addEventListener('DOMContentLoaded', () => {
   if (savedApiKey) {
     els.apiKey.value = savedApiKey;
   }
+
+  // Copia a resposta para a área de transferência
+  els.copyBtn.addEventListener('click', () => {
+    const textToCopy = els.answerContent.textContent;
+    if (!textToCopy) return;
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      const originalText = els.copyBtn.querySelector('span').textContent;
+      els.copyBtn.querySelector('span').textContent = 'Copiado!';
+      els.copyBtn.classList.add('copied');
+      els.copyBtn.querySelector('i').className = 'fas fa-check';
+
+      setTimeout(() => {
+        els.copyBtn.querySelector('span').textContent = originalText;
+        els.copyBtn.classList.remove('copied');
+        els.copyBtn.querySelector('i').className = 'fas fa-copy';
+      }, 2000);
+    }).catch(err => {
+      console.error('Falha ao copiar texto: ', err);
+      showError('Não foi possível copiar o texto.');
+    });
+  });
 
   // Estado inicial
   setLoading(false);
