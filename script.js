@@ -126,6 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
     els.question.focus();
   });
 
+  // Salva a API Key no localStorage 
+  els.apiKey.addEventListener('input', () => {
+    localStorage.setItem('gemini-api-key', els.apiKey.value);
+  });
+
+  
+  const savedApiKey = localStorage.getItem('gemini-api-key');
+  if (savedApiKey) {
+    els.apiKey.value = savedApiKey;
+  }
+
   // Estado inicial
   setLoading(false);
   clearError();
