@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let isLoading = false;
 
+  // Carrega o histórico do localStorage ou inicia um array vazio
+  let chatHistory = JSON.parse(localStorage.getItem('gemini-chat-history')) || [];
+
   function setLoading(flag) {
     isLoading = flag;
     els.askBtn.disabled = flag;
@@ -41,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!els.answerArea || !els.answerContent) return;
     els.answerContent.innerHTML = '';
     els.answerArea.hidden = true;
+    // Limpa também o histórico
+    chatHistory = [];
+    localStorage.removeItem('gemini-chat-history');
   }
   
   // Adiciona uma nova mensagem (pergunta ou resposta) ao chat
@@ -71,6 +77,15 @@ document.addEventListener('DOMContentLoaded', () => {
     messageWrapper.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
 
+  // Renderiza o histórico de chat na tela ao carregar
+  function renderHistory() {
+    if (chatHistory.length > 0) {
+      chatHistory.forEach(message => {
+        appendMessage(message.text, message.sender);
+      });
+    }
+  }
+
   function validate() {
     const q = (els.question.value || '').trim();
     const k = (els.apiKey.value || '').trim();
@@ -95,8 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const apiKey = els.apiKey.value.trim();
     const model = els.modelSelect.value;
     
-    // Adiciona a mensagem do usuário ao chat imediatamente
+    // Adiciona a pergunta do usuário ao chat e ao histórico
     appendMessage(question, 'user');
+    chatHistory.push({ sender: 'user', text: question });
+    localStorage.setItem('gemini-chat-history', JSON.stringify(chatHistory));
     
     // Limpa o campo de input e atualiza o contador
     els.question.value = '';
@@ -130,15 +147,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (answer) {
         appendMessage(answer, 'ai');
+        chatHistory.push({ sender: 'ai', text: answer });
+        localStorage.setItem('gemini-chat-history', JSON.stringify(chatHistory));
       } else {
         throw new Error('A API não retornou uma resposta no formato esperado.');
       }
 
     } catch (err) {
       console.error('Erro na chamada da API:', err);
-      showError(`Ocorreu um erro: ${err.message}`);
+      const errorMessage = `Ocorreu um erro: ${err.message}`;
+      showError(errorMessage);
       // Adiciona uma mensagem de erro também no chat para feedback visual
-      appendMessage(`Desculpe, ocorreu um erro: ${err.message}`, 'ai');
+      appendMessage(`Desculpe, ${errorMessage}`, 'ai');
+      chatHistory.push({ sender: 'ai', text: `Desculpe, ${errorMessage}` });
+      localStorage.setItem('gemini-chat-history', JSON.stringify(chatHistory));
     } finally {
       setLoading(false);
     }
@@ -208,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Estado inicial
   setLoading(false);
   clearError();
-  clearChat();
+  renderHistory(); // Renderiza o histórico em vez de limpar o chat
 });
 
 
