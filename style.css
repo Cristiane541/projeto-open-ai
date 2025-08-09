@@ -352,4 +352,122 @@ body {
   display: none !important; 
 }
 
+/* Estilos para o layout com a barra de histórico */
+.app-container {
+    display: flex;
+    max-width: 1200px; /* Aumenta a largura máxima para acomodar a barra lateral */
+    height: 95vh; /* Ocupa quase toda a altura da tela */
+}
+
+.history-sidebar {
+    width: 260px;
+    background-color: #f1f3f4;
+    border-right: 1px solid #dadce0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* Impede que a barra lateral encolha */
+}
+
+.history-header {
+    padding: 20px 15px;
+    border-bottom: 1px solid #dadce0;
+}
+
+.history-header h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #202124;
+}
+
+.new-chat-button {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.new-chat-button:hover {
+    background-color: #3367d6;
+}
+
+.history-list {
+    list-style: none;
+    padding: 10px;
+    overflow-y: auto; /* Adiciona scroll se a lista for longa */
+    flex-grow: 1;
+}
+
+.history-item {
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #3c4043;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+    transition: background-color 0.2s;
+}
+
+.history-item:hover {
+    background-color: #e8eaed;
+}
+
+.history-item.active {
+    background-color: #d1e3ff;
+    font-weight: 500;
+}
+
+.chat-main {
+    flex-grow: 1; /* Ocupa o espaço restante */
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.app-header {
+    flex-shrink: 0;
+}
+
+.app-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Permite scroll apenas na área principal do chat */
+}
+
+.response-area {
+    flex-grow: 1;
+}
+
+/* Ajustes de responsividade para o novo layout */
+@media (max-width: 800px) {
+    .history-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid #dadce0;
+    }
+
+    .app-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .chat-main {
+        height: 60vh; /* Define uma altura para o chat em telas pequenas */
+    }
+}
+
 
