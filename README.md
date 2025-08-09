@@ -40,8 +40,7 @@ projeto-ia/
 ## 🚀 Como rodar o projeto
 
 1. Clone o repositório:
-   git clone https://github.com/SEU-USUARIO/projeto-open-ai.git
-
+   git clone https://github.com/Cristiane541/projeto-open-ai.git
 2. Acesse a pasta:
    cd /projeto-open-ai.git
 
