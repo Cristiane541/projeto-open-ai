@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     apiKey: document.getElementById('api-key'),
     modelSelect: document.getElementById('model-select'),
     question: document.getElementById('user-question'),
+    charCounter: document.getElementById('char-counter'),
     askBtn: document.getElementById('ask-button'),
     clearBtn: document.getElementById('clear-button'),
     copyBtn: document.getElementById('copy-button'),
@@ -125,6 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAnswer('');
     clearError();
     els.question.focus();
+  });
+
+  // Atualiza o contador de caracteres
+  els.question.addEventListener('input', () => {
+    const currentLength = els.question.value.length;
+    const maxLength = els.question.maxLength;
+    els.charCounter.textContent = `${currentLength} / ${maxLength}`;
   });
 
   // Salva a API Key no localStorage 
