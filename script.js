@@ -139,51 +139,65 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         setLoading(true);
+
         const question = els.question.value.trim();
         const apiKey = els.apiKey.value.trim();
         const model = els.modelSelect.value;
         const currentConversation = conversations[activeChatId];
+
+        // 1. Mostra a pergunta do usuário na tela
         appendMessage(question, 'user');
-        currentConversation.messages.push({ sender: 'user', text: question });
-        if (currentConversation.messages.length === 1) {
-            currentConversation.title = question.substring(0, 30) + (question.length > 30 ? '...' : '');
-            els.historySidebar.hidden = false; 
-        }
-        saveConversations();
-        renderChatHistory();
         els.question.value = '';
         els.charCounter.textContent = `0 / ${els.question.maxLength}`;
+        
+        // 2. Prepara o histórico para a API
+        const apiHistory = currentConversation.messages.map(msg => ({
+            role: msg.sender === 'ai' ? 'model' : 'user',
+            parts: [{ text: msg.text }]
+        }));
+
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
         try {
+            // 3. Faz a chamada para a API com o histórico + pergunta atual
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: question }] }]
+                    contents: [...apiHistory, { role: 'user', parts: [{ text: question }] }]
                 })
             });
+
             if (!response.ok) {
                 const errorData = await response.json().catch(() => null);
-                const message = errorData?.error?.message || `Erro HTTP: ${response.status}`;
-                throw new Error(message);
+                throw new Error(errorData?.error?.message || `Erro HTTP: ${response.status}`);
             }
+
             const data = await response.json();
             const answer = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (answer) {
-                appendMessage(answer, 'ai');
-                currentConversation.messages.push({ sender: 'ai', text: answer });
-                saveConversations();
-            } else {
+
+            if (!answer) {
                 throw new Error('A API não retornou uma resposta no formato esperado.');
             }
+            
+            // 4. Mostra a resposta e atualiza o histórico local com a pergunta e a resposta
+            appendMessage(answer, 'ai');
+            currentConversation.messages.push({ sender: 'user', text: question });
+            currentConversation.messages.push({ sender: 'ai', text: answer });
+
+            if (currentConversation.messages.length === 2) { // Era a primeira pergunta
+                currentConversation.title = question.substring(0, 30) + (question.length > 30 ? '...' : '');
+            }
+
         } catch (err) {
             console.error('Erro na chamada da API:', err);
             const errorMessage = `Ocorreu um erro: ${err.message}`;
             showError(errorMessage);
-            appendMessage(`Desculpe, ${errorMessage}`, 'ai');
-            currentConversation.messages.push({ sender: 'ai', text: `Desculpe, ${errorMessage}` });
-            saveConversations();
+            appendMessage(errorMessage, 'ai'); // Mostra o erro no chat também
         } finally {
+            // 5. Salva a conversa e atualiza a UI
+            saveConversations();
+            renderChatHistory();
             setLoading(false);
         }
     }
