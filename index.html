@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistente Gemini</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1><i class="fab fa-google"></i> Assistente Gemini</h1>
+            <div class="api-settings">
+                <div class="input-group">
+                    <label for="api-key">Chave API Gemini:</label>
+                    <input type="password" id="api-key" placeholder="Insira sua chave da API Gemini">
+                </div>
+                <div class="input-group">
+                    <label for="model-select">Modelo:</label>
+                    <select id="model-select">
+                        <option value="gemini-flash">Gemini Flash</option>
+                        <option value="gemini-pro">Gemini Pro 2.5</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <div class="chat-container">
+                <div class="input-area">
+                    <textarea id="user-question" placeholder="Digite sua pergunta aqui..." rows="3"></textarea>
+                    <button id="ask-button" class="ask-button">
+                        <span class="button-text">Enviar</span>
+                        <i class="fas fa-spinner fa-spin loading-icon"></i>
+                    </button>
+                </div>
+
+                <div class="error-message" id="error-message" hidden></div>         
+                    <h3><i class="fas fa-robot"></i> Resposta:</h3>
+                    <div class="response-content" id="response-content"></div>
+                </div>
+            </div>
+        </main>
+
+        <div class="error-message hidden" id="error-message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
