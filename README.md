@@ -1,5 +1,16 @@
 # Projeto IA - Interface com OpenAI
 
+## Configuração da Chave de API da Gemini
+
+Para utilizar o assistente, é necessário obter uma chave de API da Gemini. Essa chave é um requisito obrigatório para acessar os recursos do assistente.
+
+### Como obter a chave de API
+
+1. Acesse o site oficial da Gemini: [link da Gemini]
+2. Crie uma conta ou faça login.
+3. Navegue até a seção de API e gere sua chave.
+4. Copie a chave gerada para usar na configuração do seu projeto.
+
 Aplicação que permite o envio de perguntas para a API da OpenAI e exibe as respostas.
 
 ## 🔧 Tecnologias
