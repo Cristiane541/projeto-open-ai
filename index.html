@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistente Gemini</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <aside class="history-sidebar" id="history-sidebar" hidden>
+            <header class="history-header">
+                <h2>Histórico</h2>
+                <button id="new-chat-button" class="new-chat-button" title="Iniciar um novo chat">
+                    <i class="fas fa-plus"></i> Novo Chat
+                </button>
+            </header>
+            <ul class="history-list" id="history-list">
+                <!-- O histórico de chats será inserido aqui pelo JavaScript -->
+            </ul>
+        </aside>
+
+        <div class="chat-main">
+            <header class="app-header">
+                <h1><i class="fab fa-google"></i> Assistente Gemini</h1>
+                <div class="api-settings">
+                    <div class="input-group">
+                        <label for="api-key">Chave API Gemini:</label>
+                        <input type="password" id="api-key" placeholder="Insira sua chave da API Gemini">
+                    </div>
+                    <div class="input-group">
+                        <label for="model-select">Modelo:</label>
+                        <select id="model-select">
+                            <option value="gemini-1.5-flash-latest">Gemini 1.5 Flash</option>
+                            <option value="gemini-1.5-pro-latest">Gemini 1.5 Pro</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <main class="app-main">
+                <div class="response-area" id="response-area" hidden>
+                    <div class="response-header">
+                        <h3><i class="fas fa-robot"></i> CHAT:</h3>
+                        <button id="copy-button" class="copy-button" title="Copiar resposta">
+                            <i class="fas fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                    <div class="response-content" id="response-content"></div>
+                </div>
+                <div class="input-area">
+                    <textarea id="user-question" placeholder="Digite sua pergunta aqui..." rows="3"
+                        maxlength="2000"></textarea>
+                    <div id="char-counter" class="char-counter">0 / 2000</div>
+                    <div class="error-message" id="error-message" hidden></div>
+                    <div class="button-group">
+                        <button id="ask-button" class="ask-button">
+                            <span class="button-text">Enviar</span>
+                            <i class="fas fa-spinner fa-spin loading-icon"></i>
+                        </button>
+                        <button id="clear-button" class="clear-button" type="button" hidden>
+                            <span class="button-text">Limpar</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="error-message" id="error-message" hidden></div>
+                <div class="response-area" id="response-area" hidden>
+                    <div class="response-header">
+                        <h3><i class="fas fa-robot"></i> CHAT:</h3>
+                        <button id="copy-button" class="copy-button" title="Copiar resposta">
+                            <i class="fas fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                    <div class="response-content" id="response-content"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

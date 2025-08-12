@@ -18,6 +18,7 @@ Aplicação que permite o envio de perguntas para a API da OpenAI e exibe as res
 - Tratamento de erros
 
 ## 📁 Estrutura
+
 projeto-ia/
 ├── index.html
 ├── style.css
@@ -39,21 +40,20 @@ projeto-ia/
 ## 🚀 Como rodar o projeto
 
 1. Clone o repositório:
-git clone https://github.com/SEU-USUARIO/projeto-open-ai.git
-
+   git clone https://github.com/Cristiane541/projeto-open-ai.git
 2. Acesse a pasta:
-cd /projeto-open-ai.git
+   cd /projeto-open-ai.git
 
-4. Mude para a branch de desenvolvimento:
-git checkout dev
+3. Mude para a branch de desenvolvimento:
+   git checkout dev
 
 Ou crie uma nova branch com seu nome ou tarefa:
 git checkout -b nome-da-feature
 
 5. Faça alterações, depois:
-git add .
-git commit -m "descrição clara do que foi feito"
-git push origin nome-da-feature
+   git add .
+   git commit -m "descrição clara do que foi feito"
+   git push origin nome-da-feature
 
 6. Abra um Pull Request para a branch dev no GitHub.
 
@@ -62,7 +62,6 @@ Use nomes claros: ajuste-layout, feature-api, bug-resposta
 Commits curtos e objetivos
 Sempre abra Pull Requests para revisão
 
-
 ## 👥 Contribuidores
 
-- [Cristiane de A. Ferreira, Jéssica Carvalho, Maycon Farias e D. Vieira]
+- [Cristiane de A. Ferreira, Jéssica Carvalho, Maycon Farias e Danilo Vieira]
